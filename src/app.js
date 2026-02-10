@@ -1,42 +1,18 @@
-const express = require('express')
-const userModel = require('./models/auth.model')
-const jwt = require('jsonwebtoken')
-const cookieparser = require('cookie-parser')
+const express = require('express');
+const dotenv = require('dotenv');
+const cookieParser = require("cookie-parser");
+const AuthRouters = require('./routes/Auth.route');
+const NoteRouters = require('./routes/note.route')
+const cors = require('cors')
 
-const  app = express()
-app.use(express.json())
-app.use(cookieparser())
+dotenv.config();
 
-app.post('/register',async (req,res)=>{
-    
-    const{email,password}=req.body;
+const app = express()
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors())
 
-    const isUserAlreadyRegister = await userModel.findOne({
-        email
-    })
+app.use('/api/auth', AuthRouters)
+app.use('/api/note',NoteRouters)
 
-    if(!isUserAlreadyRegister){
-        return res.status(409).json({
-            message:"use already register"
-        })
-    }
-    
-    const data = await userModel.create({
-        email,password
-    })
-
-    const token = jwt.sign({
-      id : data._id
-    },'3bcd6bad70b1568b4d4c9ca78a5150d9')
-
-    res.cookie('token',token)
-
-    res.status(201).json({
-        message :'Registration succefully done',
-        email,
-        password,
-        token
-    })
-})
-
-module.exports = app;
+module.exports = app
