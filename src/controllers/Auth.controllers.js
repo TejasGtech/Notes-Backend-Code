@@ -26,8 +26,8 @@ const RegisterUser = async(req,res)=>{
     })
     
     //create a token using user_id
-    const token = jwt.sign({id : User._id},process.env.JWT_SECREAT);
-    res.cookie("token",token)
+    const token = jwt.sign({id : User._id},process.env.JWT_SECRET);
+     res.cookie("token", token,{httpOnly : true,secure:false,sameSite:"lax"});
 
      return res.status(201).json({
             message:'User register succefully',
@@ -65,8 +65,8 @@ const LoginUser = async(req,res)=>{
     }  
     else{
         
-        const token = jwt.sign({id : User._id},process.env.JWT_SECREAT);
-        res.cookie("token",token)
+        const token = jwt.sign({id : User._id},process.env.JWT_SECRET);
+        res.cookie("token", token,{httpOnly:true,secure:false,sameSite:"lax"});
 
         return res.status(201).json({
             message : 'login succefull',
