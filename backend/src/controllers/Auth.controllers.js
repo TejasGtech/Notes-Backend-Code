@@ -33,6 +33,7 @@ const RegisterUser = async(req,res)=>{
             message:'User register succefully',
             username,
             email,
+            token
 
     })
 
@@ -70,7 +71,8 @@ const LoginUser = async(req,res)=>{
 
         return res.status(201).json({
             message : 'login succefull',
-            email
+            email,
+            token
         })
     }
 }
