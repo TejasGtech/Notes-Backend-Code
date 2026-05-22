@@ -7,7 +7,7 @@
 ## Setup 
 
 ```npm
-git clone
+git clone "https://github.com/TejasGtech/Notes-Backend-Code.git"
 cd backend
 ```
 
